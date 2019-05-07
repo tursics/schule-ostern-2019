@@ -5,8 +5,8 @@
 
 var layerPopup = null;
 
-var settings = {
-};
+/*var settings = {
+};*/
 
 // -----------------------------------------------------------------------------
 
@@ -148,50 +148,23 @@ function getIconSet(data) {
 function updateMapSelectItem(data) {
 	'use strict';
 
-	function setText(key, txt) {
-		var item = $('#rec' + key);
-
-		if (item.parent().hasClass('number')) {
-			txt = formatNumber(txt);
-		} else if (item.parent().hasClass('boolean')) {
-			txt = (txt === 1 ? 'ja' : 'nein');
-		}
-
-		item.text(txt);
-	}
-
 	mapAction();
-
-	var key;
-
-	for (key in data) {
-		if (data.hasOwnProperty(key)) {
-			setText(key, data[key]);
-		}
-	}
-
-	$('#receiptBox').css('display', 'block');
-}
-
-// -----------------------------------------------------------------------------
-
-function updateMapHoverItem(coordinates, data, icon, offsetY) {
-	'use strict';
 
 	var options = {
 		closeButton: false,
-		offset: L.point(0, offsetY),
-		className: 'printerLabel teacher' + Math.floor(Math.random() * 10)
+		offset: L.point(0, 0),
+		className: 'printerLabel'
 	},
+		coordinates = [data.lat, data.lng],
 		str = '',
 		value = '';
 
-	value = formatNumber(data.KostenInEuroBrutto || '0') + ' Euro';
-	icon.options.markerColor = '';
+	value = formatNumber(data.KostenInEuroBrutto || '0');
 
-	str += '<div class="top ' + icon.options.markerColor + '">' + data.Schulname + '</div>';
-	str += '<div class="middle">' + value + '</div>';
-	str += '<div class="bottom">' + data['Schulbaumaßnahme'] + '</div>';
+	str += '<div>' + data.Schulname + '</div>';
+	str += '<div>' + data['Schulbaumaßnahme'] + '</div>';
+	str += '<div>für ' + value + ' Euro</div>';
+	str += '<div class="iconsetmarker" style="margin-top:.2em;"><div style="margin:0 -.15em -.2em -.15em;text-align:left;width:auto;border-radius:0;">' + getIconSet(data) + '</div></div>';
 
 	layerPopup = L.popup(options)
 		.setLatLng(coordinates)
@@ -201,13 +174,14 @@ function updateMapHoverItem(coordinates, data, icon, offsetY) {
 
 // -----------------------------------------------------------------------------
 
+function updateMapHoverItem(coordinates, data) {
+	'use strict';
+}
+
+// -----------------------------------------------------------------------------
+
 function updateMapVoidItem() {
 	'use strict';
-
-	if (layerPopup && ddj.getMap()) {
-		ddj.getMap().closePopup(layerPopup);
-		layerPopup = null;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -309,11 +283,7 @@ $(document).on("pageshow", "#pageMap", function () {
 				return true;
 			},
 			onMouseOver: function (latlng, data) {
-				updateMapHoverItem(latlng, data, {
-					options: {
-//						markerColor: getColor(data)
-					}
-				}, 6);
+				updateMapHoverItem(latlng, data);
 			},
 			onMouseOut: function (latlng, data) {
 				updateMapVoidItem(data);
@@ -329,8 +299,7 @@ $(document).on("pageshow", "#pageMap", function () {
 			onAdd: function (obj, value) {
 				var name = value.Schulname,
 //					color = getColor(value),
-					color = 'blue',
-					schoolType = value.BSN.substr(2, 1);
+					color = 'blue';
 
 				if ('' !== value.BSN) {
 					name += ' (' + value.BSN + ')';
@@ -378,9 +347,9 @@ $(document).on("pageshow", "#pageMap", function () {
 	$('#receipt .group').on('click', function () {
 		$(this).toggleClass('groupClosed');
 	});
-	$('#receiptClose').on('click', function () {
-		$('#receiptBox').css('display', 'none');
-	});
+//	$('#receiptClose').on('click', function () {
+//		$('#receiptBox').css('display', 'none');
+//	});
 	$('#searchBox .sample a:nth-child(1)').on('click', function () {
 		$('#autocomplete').val('32. Schule (Grundschule) (11G32)');
 		selectSuggestion('11G32');
