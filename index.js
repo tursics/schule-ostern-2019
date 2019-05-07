@@ -50,19 +50,26 @@ function enrichMissingData(data) {
 
 	try {
 		$.each(data, function (key, val) {
+			val.Building = false;
+
 			val.Akustik = val.Akustik === 'X';
 			val.Amok = val.Amok === 'X';
 			val.AulaMensa = val.AulaMensa === 'X';
 			val.Barrierefreiheit = val.Barrierefreiheit === 'X';
-			val.Boden = val.Boden === 'X';
+			val.Building = val.Building || (val.Boden === 'X');
+			delete val.Boden;
 			val.Brandschutz = val.Brandschutz === 'X';
-			val.Dach = val.Dach === 'X';
+			val.Building = val.Building || (val.Dach === 'X');
+			delete val.Dach;
 			val.Elektro = val.Elektro === 'X';
-			val.Fassade = val.Fassade === 'X';
-			val.Fenster = val.Fenster === 'X';
+			val.Building = val.Building || (val.Fassade === 'X');
+			delete val.Fassade;
+			val.Building = val.Building || (val.Fenster === 'X');
+			delete val.Fenster;
 			val.Gesundheit = val.Gesundheit === 'X';
 			val.Heizung = val.Heizung === 'X';
-			val.Komplett = val.Komplett === 'X';
+			val.Building = val.Building || (val.Komplett === 'X');
+			delete val.Komplett;
 			val.Maler = val.Maler === 'X';
 			val.Raum = val.Raum === 'X';
 			val.Sanitaer = val['Sanitär'] === 'X';
@@ -122,9 +129,9 @@ function updateMapSelectItem(data) {
 		}
 	}
 
-	setText('count2017', data.count_2017 || 0);
-	setText('count2018', data.count_2018 || 0);
-	setText('hotspot', 'x' === data['Brennpunktschule-2018'] ? 'ja' : 'nein');
+//	setText('count2017', data.count_2017 || 0);
+//	setText('count2018', data.count_2018 || 0);
+//	setText('hotspot', 'x' === data['Brennpunktschule-2018'] ? 'ja' : 'nein');
 
 	$('#receiptBox').css('display', 'block');
 }
@@ -260,7 +267,6 @@ $(document).on("pageshow", "#pageMap", function () {
 
 		ddj.marker.init({
 			onAdd: function (marker, value) {
-//				console.log(marker);
 //				marker.color = getColor(value);
 				marker.iconPrefix = 'fa';
 				marker.iconFace = 'fa-building-o';
@@ -271,7 +277,7 @@ $(document).on("pageshow", "#pageMap", function () {
 			onMouseOver: function (latlng, data) {
 				updateMapHoverItem(latlng, data, {
 					options: {
-						markerColor: getColor(data)
+//						markerColor: getColor(data)
 					}
 				}, 6);
 			},
@@ -288,7 +294,8 @@ $(document).on("pageshow", "#pageMap", function () {
 			titleNoSuggestion: '<i class="fa fa-info-circle" aria-hidden="true"></i> Geben sie bitte den Namen einer Schule ein',
 			onAdd: function (obj, value) {
 				var name = value.Schulname,
-					color = getColor(value),
+//					color = getColor(value),
+					color = 'blue',
 					schoolType = value.BSN.substr(2, 1);
 
 				if ('' !== value.BSN) {
