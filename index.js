@@ -174,18 +174,6 @@ function updateMapSelectItem(data) {
 
 // -----------------------------------------------------------------------------
 
-function updateMapHoverItem(coordinates, data) {
-	'use strict';
-}
-
-// -----------------------------------------------------------------------------
-
-function updateMapVoidItem() {
-	'use strict';
-}
-
-// -----------------------------------------------------------------------------
-
 function selectSuggestion(selection) {
 	'use strict';
 
@@ -282,12 +270,6 @@ $(document).on("pageshow", "#pageMap", function () {
 
 				return true;
 			},
-			onMouseOver: function (latlng, data) {
-				updateMapHoverItem(latlng, data);
-			},
-			onMouseOut: function (latlng, data) {
-				updateMapVoidItem(data);
-			},
 			onClick: function (latlng, data) {
 				updateMapSelectItem(data);
 			}
@@ -347,16 +329,12 @@ $(document).on("pageshow", "#pageMap", function () {
 	$('#receipt .group').on('click', function () {
 		$(this).toggleClass('groupClosed');
 	});
-//	$('#receiptClose').on('click', function () {
-//		$('#receiptBox').css('display', 'none');
-//	});
-	$('#searchBox .sample a:nth-child(1)').on('click', function () {
-		$('#autocomplete').val('32. Schule (Grundschule) (11G32)');
-		selectSuggestion('11G32');
+	$('.legend').on('click', function () {
+		$('.legend').toggleClass('opened');
 	});
-	$('#searchBox .sample a:nth-child(2)').on('click', function () {
-		$('#autocomplete').val('Staatliche Ballettschule Berlin und Schule für Artistik (03B08)');
-		selectSuggestion('03B08');
+	$('#searchBox .sample a:nth-child(1)').on('click', function () {
+		$('#autocomplete').val('Neumark-Grundschule (07G13)');
+		selectSuggestion('07G13');
 	});
 
 	$("#popupShare").on('popupafteropen', function () {
