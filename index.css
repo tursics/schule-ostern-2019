@@ -240,15 +240,15 @@
 #searchBox h3 {
 	margin: .5em 0 0 0;
 }
-#searchBox .sample, #searchBox .filter, #searchBox .ui-checkbox .ui-btn, #searchBox .ui-radio .ui-btn,
+#searchBox .sample, #searchBox .filter, #searchBox .legend, #searchBox .ui-checkbox .ui-btn, #searchBox .ui-radio .ui-btn,
 #searchBox label, #searchBox .ui-controlgroup-label {
 	font-size: 13px;
 	color: #999;
 }
-#searchBox .sample, #searchBox .filter {
+#searchBox .sample, #searchBox .filter, #searchBox .legend {
 	padding: .5em 0;
 }
-#searchBox .sample a, #searchBox .filter a {
+#searchBox .sample a, #searchBox .filter a, #searchBox .legend a {
 	font-weight: 400;
 	color: #38aadd;
 	text-decoration: none;
@@ -257,7 +257,7 @@
 #searchBox .ui-slider-handle, #searchBox .ui-btn, #searchBox .ui-slider-input {
 	border-color: #38aadd !important;
 }
-#searchBox .sample a:hover, #searchBox .filter a:hover {
+#searchBox .sample a:hover, #searchBox .filter a:hover, #searchBox .legend a:hover {
 	border-bottom-color: #38aadd;
 }
 #searchBox .searchInput {
@@ -306,6 +306,24 @@
 #searchBox input:-moz-placeholder {
 	color: #aaa;
 }
+#searchBox .legend {
+	font-size: 13px;
+	font-family: 'Montserrat', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	color: #1f78b4;
+}
+#searchBox .legend i {
+	background: #1f78b4;
+	color: #fff;
+	font-size: 1.3em;
+	margin-right: .3em;
+	opacity: .7;
+	padding: .2em;
+}
+#searchBox .legend .empty {
+	height: .4em;
+}
 @media (max-width: 40em) {
 	#searchBox {
 		padding-top: .5em;
@@ -314,7 +332,7 @@
 		display: none;
 		font-size: 18px;
 	}
-	#searchBox .sample, #searchBox .filter {
+	#searchBox .sample, #searchBox .filter, #searchBox .legend {
 		display: none;
 	}
 }
@@ -762,4 +780,27 @@
 	background: none;
 }
 
+.iconsetmarker {
+	margin-top: -1em;
+	opacity: .7;
+}
+.iconsetmarker div {
+	background: #1f78b4;
+	border-radius: 0 .2em .2em 0;
+	color: #fff;
+	font-size: 1.5em;
+	line-height: 1.48em;
+	margin: 0 0 0 1.32em;
+	padding: 0 .4em 0 .1em;
+	width: max-content;
+}
+.iconsetmarker .arrow {
+	border-color: transparent #1f78b4 transparent transparent;
+	border-style: solid;
+	border-width: .5775em 1em .5775em 0;
+	font-size: 2em;
+	float: left;
+	height: 0;
+	width: 0;
+}
 /* */

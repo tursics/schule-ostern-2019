@@ -6,13 +6,6 @@
 var layerPopup = null;
 
 var settings = {
-	relativeValues: true,
-	showHotspots: true,
-	district: 'berlin',
-	type: 'all',
-	year: 2018,
-	rangeMin: 1,
-	rangeMax: 24
 };
 
 // -----------------------------------------------------------------------------
@@ -90,18 +83,66 @@ function enrichMissingData(data) {
 function getColor(data) {
 	'use strict';
 
-	var val = 0;
+	return 'blue';
+}
 
-	if (settings.relativeValues) {
-		val = parseInt(settings.year === 2017 ? data.AlleQ_2017 : data.AlleQS_2018, 10);
-	} else {
-		val = settings.year === 2017 ? data.count_2017 : data.count_2018;
+// -----------------------------------------------------------------------------
+
+function getIconSet(data) {
+	'use strict';
+
+	var str = '';
+	if (data.Building) {
+		str += '<i class="fa fa-fw fa-home" aria-hidden="true"></i>';
+	}
+	if (data.Brandschutz) {
+		str += '<i class="fa fa-fw fa-fire-extinguisher" aria-hidden="true"></i>';
+	}
+	if (data.Sanitaer) {
+		str += '<i class="fa fa-fw fa-tint" aria-hidden="true"></i>';
+	}
+	if (data.Barrierefreiheit) {
+		str += '<i class="fa fa-fw fa-wheelchair" aria-hidden="true"></i>';
+	}
+	if (data.AulaMensa) {
+		str += '<i class="fa fa-fw fa-cutlery" aria-hidden="true"></i>';
 	}
 
-	return val > settings.rangeMax ? 'red' :
-			val >= settings.rangeMin ? 'orange' :
-					'green';
+	if (data.Raum) {
+		str += '<i class="fa fa-fw fa-flask" aria-hidden="true"></i>';
+	}
+	if (data.Elektro) {
+		str += '<i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"></i>';
+	}
+	if (data.Akustik) {
+		str += '<i class="fa fa-fw fa-volume-up" aria-hidden="true"></i>';
+	}
+	if (data.Heizung) {
+		str += '<i class="fa fa-fw fa-shield" aria-hidden="true"></i>';
+	}
+	if (data.Maler) {
+		str += '<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>';
+	}
+
+	if (data.Sport) {
+		str += '<i class="fa fa-fw fa-soccer-ball-o" aria-hidden="true"></i>';
+	}
+	if (data.Amok) {
+		str += '<i class="fa fa-fw fa-bell" aria-hidden="true"></i>';
+	}
+	if (data.Gesundheit) {
+		str += '<i class="fa fa-fw fa-medkit" aria-hidden="true"></i>';
+	}
+	if (data.Schliessanlage) {
+		str += '<i class="fa fa-fw fa-key" aria-hidden="true"></i>';
+	}
+	if (data.Sonstiges) {
+		str += '<i class="fa fa-fw fa-ellipsis-h" aria-hidden="true"></i>';
+	}
+
+	return str;
 }
+
 // -----------------------------------------------------------------------------
 
 function updateMapSelectItem(data) {
@@ -129,10 +170,6 @@ function updateMapSelectItem(data) {
 		}
 	}
 
-//	setText('count2017', data.count_2017 || 0);
-//	setText('count2018', data.count_2018 || 0);
-//	setText('hotspot', 'x' === data['Brennpunktschule-2018'] ? 'ja' : 'nein');
-
 	$('#receiptBox').css('display', 'block');
 }
 
@@ -149,16 +186,12 @@ function updateMapHoverItem(coordinates, data, icon, offsetY) {
 		str = '',
 		value = '';
 
-	if (settings.relativeValues) {
-		value = (settings.year === 2017 ? data.AlleQ_2017 : data.AlleQS_2018) || '0 %';
-	} else {
-		value = (settings.year === 2017 ? data.count_2017 : data.count_2018) || '0';
-	}
+	value = formatNumber(data.KostenInEuroBrutto || '0') + ' Euro';
 	icon.options.markerColor = '';
 
 	str += '<div class="top ' + icon.options.markerColor + '">' + data.Schulname + '</div>';
 	str += '<div class="middle">' + value + '</div>';
-	str += '<div class="bottom">Ostern ' + settings.year + '</div>';
+	str += '<div class="bottom">' + data['Schulbaumaßnahme'] + '</div>';
 
 	layerPopup = L.popup(options)
 		.setLatLng(coordinates)
@@ -266,11 +299,12 @@ $(document).on("pageshow", "#pageMap", function () {
 		ddj.init(data);
 
 		ddj.marker.init({
-			onAdd: function (marker, value) {
-//				marker.color = getColor(value);
-				marker.iconPrefix = 'fa';
-				marker.iconFace = 'fa-building-o';
-//				marker.hotSpot = 'x' === value['Brennpunktschule-2018'];
+			onAdd: function () {
+				return false;
+			},
+			onAddHTML: function (marker, value) {
+				marker.htmlClass = 'iconsetmarker';
+				marker.htmlElement = '<span class="arrow"></span><div>' + getIconSet(value) + '</div>';
 
 				return true;
 			},
@@ -309,7 +343,7 @@ $(document).on("pageshow", "#pageMap", function () {
 				obj.value = name;
 				obj.desc = value.Schulart;
 
-				return ('all' === settings.type) || (schoolType === settings.type);
+				return true;
 			},
 			onFocus: function () {
 				mapAction();
@@ -354,43 +388,6 @@ $(document).on("pageshow", "#pageMap", function () {
 	$('#searchBox .sample a:nth-child(2)').on('click', function () {
 		$('#autocomplete').val('Staatliche Ballettschule Berlin und Schule für Artistik (03B08)');
 		selectSuggestion('03B08');
-	});
-	$('#filterOpen').on('click', function () {
-		$('#filterBox').css('display', 'block');
-		$('#filterOpen').css('display', 'none');
-	});
-	$('#filterClose').on('click', function () {
-		$('#filterBox').css('display', 'none');
-		$('#filterOpen').css('display', 'inline-block');
-	});
-
-	$('#searchBox #cbRelative').on('click', function () {
-		settings.relativeValues = $('#searchBox #cbRelative').is(':checked');
-		ddj.marker.update();
-	});
-	$('#searchBox #cbHotspot').on('click', function () {
-		settings.showHotspots = $('#searchBox #cbHotspot').is(':checked');
-		ddj.marker.update();
-	});
-	$('#searchBox #selectDistrict').change(function () {
-		settings.district = $('#searchBox #selectDistrict option:selected').val();
-		ddj.marker.update();
-	});
-	$('#searchBox #selectSchoolType').change(function () {
-		settings.type = $('#searchBox #selectSchoolType option:selected').val();
-		ddj.marker.update();
-	});
-	$('#searchBox #selectYear').change(function () {
-		settings.year = parseInt($('#searchBox #selectYear option:selected').val(), 10);
-		ddj.marker.update();
-	});
-	$('#searchBox #rangeMin').change(function () {
-		settings.rangeMin = parseInt($('#searchBox #rangeMin').val(), 10);
-		ddj.marker.update();
-	});
-	$('#searchBox #rangeMax').change(function () {
-		settings.rangeMax = parseInt($('#searchBox #rangeMax').val(), 10);
-		ddj.marker.update();
 	});
 
 	$("#popupShare").on('popupafteropen', function () {

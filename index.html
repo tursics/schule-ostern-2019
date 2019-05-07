@@ -75,52 +75,25 @@
 				<div><i class="fa fa-search" aria-hidden="true"></i></div>
 			</div>
 			<div class="priceBar"><div class="priceRed"></div><div class="priceOrange"></div><div class="priceBlue"></div><div class="priceGreen"></div></div>
-			<div class="filter" style="padding: 1em 0 0 0;">
-				<i class="fa fa-filter" aria-hidden="true"></i> Passe die Darstellung an:<br>
-				<div id="filterOpen"><i class="fa fa-chevron-down" aria-hidden="true"></i>anzeigen</div>
-				<div id="filterBox">
-					<select id="selectDistrict" data-native-menu="false" data-inline="false">
-						<option value="">Bezirk</option>
-						<option value="berlin" selected>Berlin</option>
-						<option value="04">Charlottenburg-Wilmersdorf</option>
-						<option value="02">Friedrichshain-Kreuzberg</option>
-						<option value="11">Lichtenberg</option>
-						<option value="10">Marzahn-Hellersdorf</option>
-						<option value="01">Mitte</option>
-						<option value="08">Neukölln</option>
-						<option value="03">Pankow</option>
-						<option value="12">Reinickendorf</option>
-						<option value="05">Spandau</option>
-						<option value="06">Steglitz-Zehlendorf</option>
-						<option value="07">Tempelhof-Schöneberg</option>
-						<option value="09">Treptow-Köpenick</option>
-					</select>
-					<select id="selectSchoolType" data-native-menu="false" data-inline="false">
-						<option value="">Schultyp</option>
-						<option value="all" selected>Alle Schultypen</option>
-						<option value="G">Grundschulen</option>
-						<option value="K">Integrierte Sekundarschulen</option>
-						<option value="Y">Gymnasien</option>
-						<option value="S">Schulen mit Förderschwerpunkt</option>
-						<option value="B">Berufliche Schulen</option>
-						<option value="A">Kolleg und Volkshochschulen</option>
-<!--						<option value="P">Privatschulen</option> -->
-					</select>
-					<select id="selectYear" data-native-menu="false" data-inline="false">
-						<option value="">Schuljahr</option>
-						<option value="2017">2017/18</option>
-						<option value="2018" selected>2018/19</option>
-					</select>
-					<input type="checkbox" checked name="cbHotspot" id="cbHotspot"><label for="cbHotspot">Zeige Brennpunktschulen</label>
-					<input type="checkbox" checked name="cbRelative" id="cbRelative"><label for="cbRelative">Zeige relative Werte</label>
-					<div data-role="rangeslider">
-						<label for="rangeMin">Färbe Schulen in gelb bei Werten von:</label>
-						<input name="rangeMin" id="rangeMin" min="0" max="45" value="1" type="range" />
-						<label for="rangeMax">Färbe Schulen in gelb bei Werten von:</label>
-						<input name="rangeMax" id="rangeMax" min="0" max="45" value="24" type="range" />
-					</div>
-					<div id="filterClose"><i class="fa fa-chevron-up" aria-hidden="true"></i>verkleinern</div>
-				</div>
+			<div class="legend" style="padding: 1em 0 0 0;">
+				Legende<br>
+					<div><i class="fa fa-fw fa-home" aria-hidden="true"></i> Gebäude</div>
+					<div><i class="fa fa-fw fa-fire-extinguisher" aria-hidden="true"></i> Brandschutz</div>
+					<div><i class="fa fa-fw fa-tint" aria-hidden="true"></i> Sanitäranlage</div>
+					<div><i class="fa fa-fw fa-wheelchair" aria-hidden="true"></i> Barrierefreiheit</div>
+					<div><i class="fa fa-fw fa-cutlery" aria-hidden="true"></i> Aula bzw. Mensa</div>
+					<div class="empty"></div>
+					<div><i class="fa fa-fw fa-flask" aria-hidden="true"></i> Räume</div>
+					<div><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"></i> Elektro</div>
+					<div><i class="fa fa-fw fa-volume-up" aria-hidden="true"></i> Akustik</div>
+					<div><i class="fa fa-fw fa-shield" aria-hidden="true"></i> Heizung</div>
+					<div><i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i> Malerarbeiten</div>
+					<div class="empty"></div>
+					<div><i class="fa fa-fw fa-soccer-ball-o" aria-hidden="true"></i> Sport</div>
+					<div><i class="fa fa-fw fa-bell" aria-hidden="true"></i> Amok</div>
+					<div><i class="fa fa-fw fa-medkit" aria-hidden="true"></i> Gesundheit</div>
+					<div><i class="fa fa-fw fa-key" aria-hidden="true"></i> Schließanlage</div>
+					<div><i class="fa fa-fw fa-ellipsis-h" aria-hidden="true"></i> Sonstiges</div>
 			</div>
 			<div class="priceBar"><div class="priceRed"></div><div class="priceOrange"></div><div class="priceBlue"></div><div class="priceGreen"></div></div>
 			<div id="receiptBox" style="padding: 0 0 .5em 0;">
@@ -134,24 +107,6 @@
 					<div class="bold"><span id="recSchulbaumaßnahme"></span></div>
 					<div class="bold number">für <span id="recKostenInEuroBrutto"></span> Euro</div>
 					<div class="empty"></div>
-					<div class="bold">==============</div>
-					<div class="bold"><i class="fa fa-fw fa-home" aria-hidden="true"></i> Gebäude: <span id="recBuilding"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-fire-extinguisher" aria-hidden="true"></i> Brandschutz: <span id="recBrandschutz"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-tint" aria-hidden="true"></i> Sanitäranlage: <span id="recSanitaer"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-wheelchair" aria-hidden="true"></i> Barrierefreiheit: <span id="recBarrierefreiheit"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-cutlery" aria-hidden="true"></i> Aula bzw. Mensa: <span id="recAulaMensa"></span></div>
-					<div class="empty"></div>
-					<div class="bold"><i class="fa fa-fw fa-flask" aria-hidden="true"></i> Räume: <span id="recRaum"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"></i> Elektro: <span id="recElektro"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-volume-up" aria-hidden="true"></i> Akustik: <span id="recAkustik"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-shield" aria-hidden="true"></i> Heizung: <span id="recHeizung"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i> Malerarbeiten: <span id="recMaler"></span></div>
-					<div class="empty"></div>
-					<div class="bold"><i class="fa fa-fw fa-soccer-ball-o" aria-hidden="true"></i> Sport: <span id="recSport"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-bell" aria-hidden="true"></i> Amok: <span id="recAmok"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-medkit" aria-hidden="true"></i> Gesundheit: <span id="recGesundheit"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-key" aria-hidden="true"></i> Schließanlage: <span id="recSchliessanlage"></span></div>
-					<div class="bold"><i class="fa fa-fw fa-ellipsis-h" aria-hidden="true"></i> Sonstiges: <span id="recSonstiges"></span></div>
 				</div>
 				<div id="receiptClose"><i class="fa fa-chevron-up" aria-hidden="true"></i>verkleinern</div>
 			</div>
