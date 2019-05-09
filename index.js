@@ -161,7 +161,7 @@ function updateMapSelectItem(data) {
 
 	value = formatNumber(data.KostenInEuroBrutto || '0');
 
-	str += '<div>' + data.Schulname + '</div>';
+	str += '<div style="padding-bottom:.5em;">' + data.Schulname + '</div>';
 	str += '<div>' + data['Schulbaumaßnahme'] + '</div>';
 	str += '<div>für ' + value + ' Euro</div>';
 	str += '<div class="iconsetmarker" style="margin-top:.2em;"><div style="margin:0 -.15em -.2em -.15em;text-align:left;width:auto;border-radius:0;">' + getIconSet(data) + '</div></div>';
