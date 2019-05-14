@@ -767,15 +767,23 @@
 	margin-top: -1em;
 	opacity: .7;
 }
+div.embedTable .iconsetmarker {
+	font-size: .6em;
+}
 .iconsetmarker div {
 	background: #1f78b4;
 	border-radius: 0 .2em .2em 0;
-	color: #fff;
-	font-size: 1.5em;
-	line-height: 1.48em;
+	color: #fff !important;
+	font-size: 1.5em !important;
+	line-height: 1.48em !important;
 	margin: 0 0 0 1.32em;
 	padding: 0 .4em 0 .1em;
 	width: max-content;
+}
+div.embedTable .iconsetmarker div {
+	border-radius: .2em;
+	margin: 0;
+	padding: 0 .4em !important;
 }
 .iconsetmarker .arrow {
 	border-color: transparent #1f78b4 transparent transparent;
